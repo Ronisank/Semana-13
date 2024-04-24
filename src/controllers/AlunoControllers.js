@@ -1,3 +1,4 @@
+const { password } = require("../config/database.config");
 const Aluno = require("../models/Aluno");
 
 class AlunoController {
@@ -28,10 +29,12 @@ class AlunoController {
         }
     }
     async cadastrar(req, res) {
-        const { nome, data_nascimento, celular } = req.body;
+        const { nome, email, password, data_nascimento, celular } = req.body;
 
         const aluno = await Aluno.create({
             nome: nome,
+            email: email,
+            password: password,
             data_nascimento: data_nascimento,
             celular: celular
         });
@@ -41,6 +44,8 @@ class AlunoController {
         try {
             const id = req.params.id;
             const nome = req.body.nome;
+            const email = req.body.email;
+            const password = req.body.password;
             const data_nascimento = req.body.data_nascimento;
             const celular = req.body.celular;
             const aluno = await Aluno.findByPk(id);
@@ -50,6 +55,12 @@ class AlunoController {
             }
             if (!nome) {
                 return res.status(400).json({ messagem: 'Campo nome obrigatório não preenchido!' });
+            }
+            if (!email) {
+                return res.status(400).json({ messagem: 'Campo email obrigatório não preenchido!' });
+            }
+            if (!password) {
+                return res.status(400).json({ messagem: 'Campo password obrigatório não preenchido!' });
             }
             if (!data_nascimento) {
                 return res.status(400).json({ messagem: 'Campo data_nascimento obrigatório não preenchido!' });
