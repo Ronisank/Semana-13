@@ -3,12 +3,23 @@ const { DataTypes } = require('sequelize');
 
 const Aluno = connection.define('alunos', {
     nome: {
+        allowNull: false,
+        type: DataTypes.STRING,
+    },
+    email: {
+        allowNull: false,
+        type: DataTypes.STRING,
+    },
+    password: {
+        allowNull: false,
         type: DataTypes.STRING,
     },
     data_nascimento: {
-        type: DataTypes.DATE,
+        allowNull: false,
+        type: DataTypes.DATEONLY,
     },
     celular: {
+        allowNull: true,
         type: DataTypes.STRING,
     },
 });

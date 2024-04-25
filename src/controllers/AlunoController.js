@@ -1,4 +1,3 @@
-const { password } = require("../config/database.config");
 const Aluno = require("../models/Aluno");
 
 class AlunoController {

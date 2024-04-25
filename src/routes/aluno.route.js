@@ -1,19 +1,20 @@
 const { Router } = require("express");
 const Aluno = require('../models/Aluno');
-const AlunoControllers = require("../controllers/AlunoControllers");
+const AlunoController = require("../controllers/AlunoController");
+const auth = require('../middleware/auth');
 
 const alunoRoute = new Router();
 
 
-alunoRoute.get('/', AlunoControllers.listarTodos);
+alunoRoute.get('/', auth, AlunoController.listarTodos);
 
-alunoRoute.get('/:id', AlunoControllers.listarUm);
+alunoRoute.get('/:id',auth, AlunoController.listarUm);
 
-alunoRoute.post('/', AlunoControllers.cadastrar);
+alunoRoute.post('/', AlunoController.cadastrar);
 
-alunoRoute.put('/:id', AlunoControllers.atualizar);
+alunoRoute.put('/:id',auth, AlunoController.atualizar);
 
-alunoRoute.delete('/alunos/:id', async (req, res) => {
+alunoRoute.delete('/alunos/:id',auth, async (req, res) => {
     try {
         const id = req.params.id;
         const aluno = await Aluno.findByPk(id);
