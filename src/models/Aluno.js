@@ -24,9 +24,10 @@ const Aluno = connection.define('alunos', {
         type: DataTypes.STRING,
     },
 });
-Aluno.beforeSave(async (user) => {
-    user.password = await hash(user.password, 8)
-    return user
+Aluno.beforeSave(async (aluno) => {
+    aluno.password = await hash(aluno.password, 8)
+    console.log(aluno.password)
+    return aluno
 })
 
 module.exports = Aluno;
