@@ -1,7 +1,7 @@
 const {connection} = require('../database/connection');
 const {DataTypes} = require('sequelize');
 
-const Professor = connection.define('professores', {
+const Teacher = connection.define('professores', {
     nome: {
         type: DataTypes.STRING,
     },
@@ -9,4 +9,4 @@ const Professor = connection.define('professores', {
         type: DataTypes.DATE,
     },
 });
-module.exports = Professor;
+module.exports = Teacher;

@@ -1,7 +1,7 @@
 const { connection } = require('../database/connection');
 const { DataTypes } = require('sequelize');
 
-const Matricula = connection.define('matriculas', {
+const Registration = connection.define('matriculas', {
     aluno_id: {
         type: DataTypes.INTEGER,
     },
@@ -10,5 +10,5 @@ const Matricula = connection.define('matriculas', {
     },
 });
 
-module.exports = Matricula;
+module.exports = Registration;
 
