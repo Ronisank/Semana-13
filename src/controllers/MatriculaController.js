@@ -1,5 +1,5 @@
 const Aluno = require("../models/Aluno");
-const Curso = require("../models/Curso");
+const Course = require("../models/Course");
 const Matricula = require("../models/Matricula");
 
 
@@ -19,7 +19,7 @@ class MatriculaController {
             if (!aluno){
                 return res.status(404).json({ messagem: 'Aluno não encontrado!' });
             }
-            const curso = await Curso.findByPk(curso_id);
+            const curso = await Course.findByPk(curso_id);
             if (!curso){
                 return res.status(404).json({ messagem: 'Curso não encontrado!' });
             }
@@ -47,7 +47,7 @@ class MatriculaController {
                 aluno_id: aluno_id,
                 curso_id: curso_id
             })
-            res.status(201).json({ messagem: 'Matrícula realizada com sucesso!', matricula: matricula});
+            res.status(201).json({ message: 'Matrícula realizada com sucesso!', matricula: matricula});
 
         } catch (error) {
             res.status(500).json({ message: error.message });
