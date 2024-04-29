@@ -1,75 +1,76 @@
 const { Router } = require('express');
-const Professor = require('../models/Professor');
+const Teacher = require('../models/Teacher');
 
-const profeRoute = new Router();    
+const teacherRoute = new Router();    
 
-profeRoute.get('/professores', async (req, res) => {
+teacherRoute.get('/teachers', async (req, res) => {
     const params = {}
-    if (req.query.nome) {
-        params = { ...params, nome: req.query.nome }
+    if (req.query.name) {
+        params = { ...params, name: req.query.name }
     }
-    const professores = await Professor.findAll({ where: params })
-    res.status(200).json({ professores });
+    const teachers = await Teacher.findAll({ where: params })
+    res.status(200).json({ teachers });
 });
 
-profeRoute.post('/professores', async (req, res) => {
+teacherRoute.post('/teachers', async (req, res) => {
     try {
-        const { nome, data_nascimento } = req.body;
-        if (!nome) {
-            return res.status(400).json({ messagem: 'Campo nome obrigatório não preenchido!' });
+        const { name, birth_date } = req.body;
+        if (!name) {
+            return res.status(400).json({ message: 'Name required!' });
         }
-        if (!data_nascimento) {
-            return res.status(400).json({ messagem: 'Campo data_nascimento obrigatório não preenchido!' });
+        if (!birth_date) {
+            return res.status(400).json({ message: 'Birth date required!' });
         }
-        const professor = await Professor.create({
-            nome: nome,
-            data_nascimento: data_nascimento
+        const teacher = await Teacher.create({
+            name: name,
+            birth_date: birth_date
         });
-        res.status(201).json({ messagem: 'Professor criado com sucesso!', professor: professor });
+        res.status(201).json({ message: 'Teacher created successfully', teacher: teacher });
 
     } catch (error) {
-        res.status(500).json({ messagem: error.message });
+        res.status(500).json({ message: error.message });
     }
 });
 
-profeRoute.put('/professores/:id', async (req, res) => {
+teacherRoute.put('/teachers/:id', async (req, res) => {
     try {
         const id = req.params.id;
-        const nome = req.body.nome;
-        const data_nascimento = req.body.data_nascimento;
-        const professor = await Professor.findByPk(id);
+        const name = req.body.name;
+        const birth_date = req.body.birth_date;
 
-        if (!professor) {
-            return res.status(404).json({ messagem: 'Professor não encontrado!' });
+        const teacher = await Teacher.findByPk(id);
+
+        if (!teacher) {
+            return res.status(404).json({ message: 'Teacher not found!' });
         }
-        if (!nome) {
-            return res.status(400).json({ messagem: 'Campo nome obrigatório não preenchido!' });
+        if (!name) {
+            return res.status(400).json({ message: 'Name required!' });
         }
-        if (!data_nascimento) {
-            return res.status(400).json({ messagem: 'Campo data_nascimento obrigatório não preenchido!' });
+        if (!birth_date) {
+            return res.status(400).json({ message: 'Birth_date required!' });
         }
-        professor.update(req.body);
-        await professor.save();
-        res.status(200).json({ messagem: 'Professor atualizado com sucesso!', professor: professor });
+        teacher.update(req.body);
+        await teacher.save();
+        res.status(200).json({ message: 'Teacher successfully upgraded!', teacher: teacher });
 
     } catch (error) {
-        res.status(500).json({ messagem: error.message });
+        res.status(500).json({ message: error.message });
     }
 });
 
-profeRoute.delete('/professores/:id', async (req, res) => {
+teacherRoute.delete('/teachers/:id', async (req, res) => {
     try {
         const id = req.params.id;
-        const professor = await Professor.findByPk(id);
-        if (!professor) {
-            return res.status(404).json({ messagem: 'Professor não encontrado!' });
+        const teacher = await Teacher.findByPk(id);
+        if (!teacher) {
+            return res.status(404).json({ message: 'Teacher not found!' });
         }
-        await professor.destroy({ where: { id: id } });
-        res.status(204).json({ messagem: 'Professor deletado com sucesso!' });
+        await teacher.destroy({ where: { id: id } });
+        res.status(204);
 
     } catch (error) {
-        res.status(500).json({ messagem: error.message });
+        res.status(500).json({ message: error.message });
     }
 });
 
-module.exports = profeRoute;
+module.exports = teacherRoute;

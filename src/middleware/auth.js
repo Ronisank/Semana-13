@@ -5,13 +5,13 @@ async function auth(req, res, next) {
     const token = req.headers.authorization;
 
     if (!token) {
-        return res.status(401).json({ messagem: 'Token não informado!' });
+        return res.status(401).json({ message: 'Token not provided!' });
     }
         const payload = verify(token, process.env.SECRET);
-        req.usuario = payload;
+        req.user = payload;
         next();
     } catch (error) {
-        return res.status(401).json({ messagem: 'Token inválido!' });
+        return res.status(401).json({ message: 'Token invalid!' });
     }
 }
 
