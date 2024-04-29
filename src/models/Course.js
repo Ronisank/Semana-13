@@ -1,7 +1,7 @@
 const { connection } = require('../database/connection');
 const { DataTypes } = require('sequelize');
 
-const Curso = connection.define('cursos', {
+const Course = connection.define('cursos', {
     nome: {
         type: DataTypes.STRING,
     },
@@ -10,4 +10,4 @@ const Curso = connection.define('cursos', {
     },
 });
 
-module.exports = Curso;
+module.exports = Course;
